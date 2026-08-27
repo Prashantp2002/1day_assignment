@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Inter", sans-serif;
   color: #1e293b;
@@ -14,6 +18,12 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }

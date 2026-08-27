@@ -6,25 +6,29 @@ import {
   User,
 } from "lucide-react";
 
+import useCartStore from "../store/useCartStore";
 import useAuthStore from "../store/useAuthStore";
 
 function Navbar() {
+  const items = useCartStore((state) => state.items);
+
   const isAdmin = useAuthStore((state) => state.isAdmin);
   const toggleAdmin = useAuthStore((state) => state.toggleAdmin);
 
+  const cartCount = items.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
   return (
     <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white">
-
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
 
         <Link
           to="/products"
           className="flex items-center gap-2 text-teal-700"
         >
-          <Boxes
-            size={26}
-            strokeWidth={2}
-          />
+          <Boxes size={26} strokeWidth={2} />
 
           <span className="font-display text-xl font-bold tracking-tight">
             Store
@@ -68,7 +72,6 @@ function Navbar() {
 
         </div>
 
-
         <div className="flex items-center gap-3">
 
           <button
@@ -82,20 +85,14 @@ function Navbar() {
             aria-label="Search"
             className="text-slate-600 hover:text-teal-700"
           >
-            <Search
-              size={20}
-              strokeWidth={1.75}
-            />
+            <Search size={20} strokeWidth={1.75} />
           </button>
 
           <button
             aria-label="Account"
             className="hidden text-slate-600 hover:text-teal-700 sm:block"
           >
-            <User
-              size={20}
-              strokeWidth={1.75}
-            />
+            <User size={20} strokeWidth={1.75} />
           </button>
 
           <Link
@@ -103,19 +100,18 @@ function Navbar() {
             aria-label="Cart"
             className="relative text-slate-600 hover:text-teal-700"
           >
-            <ShoppingCart
-              size={20}
-              strokeWidth={1.75}
-            />
-            <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-700 px-1 text-xs font-bold text-white">
-              2
-            </span>
+            <ShoppingCart size={20} strokeWidth={1.75} />
+
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-700 px-1 text-xs font-bold text-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
         </div>
 
       </div>
-
     </nav>
   );
 }

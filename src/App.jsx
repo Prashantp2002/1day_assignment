@@ -7,6 +7,7 @@ import CartPage from "./pages/CartPage";
 import AdminPage from "./pages/AdminPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RequireAdmin from "./components/RequireAdmin";
+import KeysTest from "./pages/KeysTest";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             </RequireAdmin>
           }/>
         <Route path="*" element={<NotFoundPage />}/>
+        <Route path="/keys" element={<KeysTest />} />
 
       </Route>
 

@@ -74,10 +74,9 @@ function ProductDetailPage() {
   return (
     <div>
 
-      {/* Back */}
       <button
         onClick={() => navigate(-1)}
-        className="mb-6 flex items-center gap-2 font-medium text-slate-600 hover:text-teal-700"
+        className="mb-6 flex items-center gap-2 font-medium text-slate-600 transition-colors hover:text-teal-700"
       >
         <ArrowLeft size={20} />
 
@@ -87,29 +86,27 @@ function ProductDetailPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
-        {/* Images */}
         <div>
 
-          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <img
               src={selectedImage}
               alt={product.title}
-              className="h-[400px] w-full object-cover sm:h-[500px]"
+              className="h-[400px] w-full object-cover transition-opacity duration-300 sm:h-[500px]"
             />
           </div>
 
 
-          {/* Gallery */}
-          <div className="mt-4 flex gap-3 overflow-x-auto">
+          <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
 
             {product.images?.map((image, index) => (
               <button
                 key={`${product.id}-${index}`}
                 onClick={() => setSelectedImage(image)}
-                className={`flex-shrink-0 overflow-hidden rounded-lg border-2 ${
+                className={`flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
                   selectedImage === image
                     ? "border-teal-700"
-                    : "border-slate-200"
+                    : "border-slate-200 hover:border-slate-300"
                 }`}
               >
                 <img
@@ -125,10 +122,9 @@ function ProductDetailPage() {
         </div>
 
 
-        {/* Information */}
         <div>
 
-          <p className="text-sm font-medium uppercase tracking-wide text-teal-700">
+          <p className="text-sm font-semibold uppercase tracking-wider text-teal-700">
             {product.category}
           </p>
 
@@ -141,7 +137,7 @@ function ProductDetailPage() {
           </p>
 
 
-          <div className="mt-6 flex items-center gap-2">
+          <div className="mt-6 flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 w-fit">
 
             <Star
               size={20}
@@ -156,7 +152,7 @@ function ProductDetailPage() {
           </div>
 
 
-          <p className="mt-6 text-3xl font-bold">
+          <p className="mt-6 text-3xl font-bold text-slate-900">
             ₹{product.price.toFixed(2)}
           </p>
 
@@ -173,7 +169,7 @@ function ProductDetailPage() {
 
           <button
             onClick={() => addItem(product)}
-            className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-4 font-medium text-white hover:bg-teal-800 sm:w-auto"
+            className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-4 font-medium text-white shadow-sm transition-colors hover:bg-teal-800 sm:w-auto"
           >
             <ShoppingCart size={20} />
 

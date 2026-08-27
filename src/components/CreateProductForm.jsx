@@ -46,7 +46,7 @@ function CreateProductForm({ categories, onSuccess }) {
     >
       <div>
 
-        <label className="mb-2 block font-medium">
+        <label className="mb-2 block font-medium text-slate-700">
           Title
         </label>
 
@@ -59,7 +59,7 @@ function CreateProductForm({ categories, onSuccess }) {
               message: "Title must be at least 3 characters",
             },
           })}
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition-colors focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
           placeholder="Product title"
         />
 
@@ -72,7 +72,7 @@ function CreateProductForm({ categories, onSuccess }) {
       </div>
       <div>
 
-        <label className="mb-2 block font-medium">
+        <label className="mb-2 block font-medium text-slate-700">
           Price
         </label>
 
@@ -85,7 +85,7 @@ function CreateProductForm({ categories, onSuccess }) {
             validate: (value) =>
               value > 0 || "Price must be positive",
           })}
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition-colors focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
           placeholder="Product price"
         />
 
@@ -99,7 +99,7 @@ function CreateProductForm({ categories, onSuccess }) {
 
       <div>
 
-        <label className="mb-2 block font-medium">
+        <label className="mb-2 block font-medium text-slate-700">
           Category
         </label>
 
@@ -107,7 +107,7 @@ function CreateProductForm({ categories, onSuccess }) {
           {...register("category", {
             required: "Category is required",
           })}
-          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
+          className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none transition-colors focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
         >
           <option value="">
             Select category
@@ -134,7 +134,7 @@ function CreateProductForm({ categories, onSuccess }) {
 
       <div>
 
-        <label className="mb-2 block font-medium">
+        <label className="mb-2 block font-medium text-slate-700">
           Description
         </label>
 
@@ -148,7 +148,7 @@ function CreateProductForm({ categories, onSuccess }) {
                 "Description must be at least 10 characters",
             },
           })}
-          className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
+          className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 outline-none transition-colors focus:border-teal-700 focus:ring-2 focus:ring-teal-100"
           placeholder="Product description"
         />
 
@@ -170,7 +170,7 @@ function CreateProductForm({ categories, onSuccess }) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-lg bg-teal-700 px-5 py-3 font-medium text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-lg bg-teal-700 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSubmitting ? "Creating..." : "Create Product"}
       </button>

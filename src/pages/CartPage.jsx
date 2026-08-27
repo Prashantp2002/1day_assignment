@@ -47,10 +47,12 @@ function CartPage() {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
 
-        <ShoppingBag
-          size={50}
-          className="text-slate-400"
-        />
+        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
+          <ShoppingBag
+            size={36}
+            className="text-slate-400"
+          />
+        </div>
 
         <h1 className="mt-5 font-display text-3xl font-bold">
           Your cart is empty
@@ -62,7 +64,7 @@ function CartPage() {
 
         <Link
           to="/products"
-          className="mt-6 rounded-lg bg-teal-700 px-5 py-3 font-medium text-white hover:bg-teal-800"
+          className="mt-6 rounded-lg bg-teal-700 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-800"
         >
           Browse Products
         </Link>
@@ -85,7 +87,7 @@ function CartPage() {
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center"
+            className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:items-center"
           >
 
             <div className="flex min-w-0 flex-1 items-center gap-4">
@@ -112,7 +114,7 @@ function CartPage() {
 
               <button
                 onClick={() => decrement(item.id)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 hover:border-teal-700 hover:text-teal-700"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 transition-colors hover:border-teal-700 hover:text-teal-700"
               >
                 <Minus size={18} />
               </button>
@@ -123,7 +125,7 @@ function CartPage() {
 
               <button
                 onClick={() => increment(item.id)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 hover:border-teal-700 hover:text-teal-700"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 transition-colors hover:border-teal-700 hover:text-teal-700"
               >
                 <Plus size={18} />
               </button>
@@ -131,14 +133,14 @@ function CartPage() {
             </div>
 
 
-            <p className="font-bold sm:w-28 sm:text-right">
+            <p className="font-bold text-slate-900 sm:w-28 sm:text-right">
               ₹{(item.price * item.quantity).toFixed(2)}
             </p>
 
             <button
               onClick={() => openRemoveModal(item)}
               aria-label={`Remove ${item.title}`}
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-red-600 hover:bg-red-50"
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-red-600 transition-colors hover:bg-red-50"
             >
               <Trash2 size={20} />
             </button>
@@ -148,13 +150,13 @@ function CartPage() {
 
       </div>
 
-      <div className="mt-8 flex flex-col items-start justify-between gap-4 rounded-xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center">
+      <div className="mt-8 flex flex-col items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center">
 
-        <span className="text-lg font-medium">
+        <span className="text-lg font-medium text-slate-700">
           Order Total
         </span>
 
-        <span className="font-display text-2xl font-bold">
+        <span className="font-display text-2xl font-bold text-teal-700">
           ₹{orderTotal.toFixed(2)}
         </span>
 
@@ -178,14 +180,14 @@ function CartPage() {
 
           <button
             onClick={closeRemoveModal}
-            className="rounded-lg border border-slate-200 px-4 py-3 font-medium text-slate-600 hover:bg-slate-50"
+            className="rounded-lg border border-slate-200 px-4 py-3 font-medium text-slate-600 transition-colors hover:bg-slate-50"
           >
             Cancel
           </button>
 
           <button
             onClick={confirmRemove}
-            className="rounded-lg bg-red-600 px-4 py-3 font-medium text-white hover:bg-red-700"
+            className="rounded-lg bg-red-600 px-4 py-3 font-medium text-white transition-colors hover:bg-red-700"
           >
             Remove
           </button>

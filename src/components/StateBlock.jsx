@@ -13,7 +13,7 @@ function StateBlock({ type, message, onRetry }) {
           className="animate-spin text-teal-700"
         />
 
-        <p className="mt-4 text-slate-600">
+        <p className="mt-4 text-slate-500">
           Loading products...
         </p>
       </div>
@@ -22,7 +22,7 @@ function StateBlock({ type, message, onRetry }) {
 
   if (type === "error") {
     return (
-      <div className="flex min-h-60 flex-col items-center justify-center px-4 text-center">
+      <div className="flex min-h-60 flex-col items-center justify-center rounded-2xl border border-red-100 bg-red-50/40 px-4 text-center">
 
         <AlertCircle
           size={40}
@@ -39,7 +39,7 @@ function StateBlock({ type, message, onRetry }) {
 
         <button
           onClick={onRetry}
-          className="mt-5 h-11 rounded-lg bg-teal-700 px-5 font-medium text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="mt-5 h-11 rounded-lg bg-teal-700 px-5 font-medium text-white shadow-sm transition-colors hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Retry
         </button>
@@ -50,7 +50,7 @@ function StateBlock({ type, message, onRetry }) {
 
   if (type === "empty") {
     return (
-      <div className="flex min-h-60 flex-col items-center justify-center px-4 text-center">
+      <div className="flex min-h-60 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-4 text-center">
 
         <PackageSearch
           size={40}

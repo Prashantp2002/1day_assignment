@@ -50,7 +50,7 @@ function AdminPage() {
   return (
     <div>
 
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center">
 
         <div>
           <h1 className="font-display text-3xl font-bold tracking-tight">
@@ -64,7 +64,7 @@ function AdminPage() {
 
         <button
           onClick={openModal}
-          className="flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-3 font-medium text-white hover:bg-teal-800"
+          className="flex items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-800"
         >
           <Plus size={20} />
 
@@ -75,7 +75,7 @@ function AdminPage() {
 
 
       {successMessage && (
-        <div className="mt-6 rounded-lg border border-teal-200 bg-teal-50 p-4 text-teal-700">
+        <div className="mt-6 rounded-xl border border-teal-200 bg-teal-50 p-4 text-teal-700">
           {successMessage}
         </div>
       )}

@@ -1,9 +1,13 @@
 function AdminPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">
-        Admin
+    <div>
+      <h1 className="font-display text-3xl font-bold">
+        Admin Page
       </h1>
+
+      <p className="mt-2 text-slate-600">
+        Welcome to the admin page.
+      </p>
     </div>
   );
 }

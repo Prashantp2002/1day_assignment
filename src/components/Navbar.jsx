@@ -6,14 +6,19 @@ import {
   User,
 } from "lucide-react";
 
+import useAuthStore from "../store/useAuthStore";
+
 function Navbar() {
+  const isAdmin = useAuthStore((state) => state.isAdmin);
+  const toggleAdmin = useAuthStore((state) => state.toggleAdmin);
+
   return (
     <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white">
+
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
 
-        {/* Logo */}
         <Link
-          to="/"
+          to="/products"
           className="flex items-center gap-2 text-teal-700"
         >
           <Boxes
@@ -26,11 +31,10 @@ function Navbar() {
           </span>
         </Link>
 
-        {/* Navigation */}
         <div className="hidden items-center gap-6 md:flex">
 
           <NavLink
-            to="/"
+            to="/products"
             className={({ isActive }) =>
               isActive
                 ? "font-medium text-teal-700"
@@ -64,12 +68,19 @@ function Navbar() {
 
         </div>
 
-        {/* Icons */}
-        <div className="flex items-center gap-4">
+
+        <div className="flex items-center gap-3">
 
           <button
-            className="text-slate-600 hover:text-teal-700"
+            onClick={toggleAdmin}
+            className="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 hover:border-teal-700 hover:text-teal-700 sm:block"
+          >
+            {isAdmin ? "Logout Admin" : "Log in as admin"}
+          </button>
+
+          <button
             aria-label="Search"
+            className="text-slate-600 hover:text-teal-700"
           >
             <Search
               size={20}
@@ -78,8 +89,8 @@ function Navbar() {
           </button>
 
           <button
-            className="text-slate-600 hover:text-teal-700"
             aria-label="Account"
+            className="hidden text-slate-600 hover:text-teal-700 sm:block"
           >
             <User
               size={20}
@@ -87,18 +98,15 @@ function Navbar() {
             />
           </button>
 
-          {/* Cart */}
           <Link
             to="/cart"
-            className="relative text-slate-600 hover:text-teal-700"
             aria-label="Cart"
+            className="relative text-slate-600 hover:text-teal-700"
           >
             <ShoppingCart
               size={20}
               strokeWidth={1.75}
             />
-
-            {/* Temporary cart count */}
             <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-teal-700 px-1 text-xs font-bold text-white">
               2
             </span>
@@ -107,6 +115,7 @@ function Navbar() {
         </div>
 
       </div>
+
     </nav>
   );
 }

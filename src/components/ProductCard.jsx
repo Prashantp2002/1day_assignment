@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Star, ShoppingCart } from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 
 import useCartStore from "../store/useCartStore";
 
@@ -16,15 +16,13 @@ function ProductCard({ product }) {
   return (
     <Link
       to={`/products/${product.id}`}
-      className="group block overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+      className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
     >
-
-      <div className="relative">
-
+      <div className="relative overflow-hidden">
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="h-56 w-full object-cover"
+          className="h-52 w-full object-cover transition duration-300 group-hover:scale-105 sm:h-56"
         />
 
         {product.discountPercentage > 10 && (
@@ -32,45 +30,39 @@ function ProductCard({ product }) {
             {Math.round(product.discountPercentage)}% OFF
           </span>
         )}
-
       </div>
 
       <div className="p-4">
 
-        <h2 className="truncate font-display font-bold">
+        <h2 className="truncate font-display font-bold leading-tight">
           {product.title}
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 truncate text-sm text-slate-500">
           {product.brand || "No brand"}
         </p>
 
-
         <div className="mt-4 flex items-center justify-between">
 
-          <span className="font-bold text-slate-900">
+          <span className="font-bold">
             ₹{product.price.toFixed(2)}
           </span>
 
-          <div className="flex items-center gap-1 text-sm">
-
+          <div className="flex items-center gap-1 text-sm text-slate-600">
             <Star
               size={16}
               fill="currentColor"
-              className="text-amber-500"
+              className="text-teal-700"
             />
 
-            <span>
-              {product.rating}
-            </span>
-
+            <span>{product.rating}</span>
           </div>
 
         </div>
 
         <button
           onClick={handleAddToCart}
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 py-3 font-medium text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+          className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 font-medium text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           <ShoppingCart size={18} />
 
@@ -78,7 +70,6 @@ function ProductCard({ product }) {
         </button>
 
       </div>
-
     </Link>
   );
 }

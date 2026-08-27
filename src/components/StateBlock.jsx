@@ -1,10 +1,10 @@
-import { AlertCircle, PackageSearch, LoaderCircle } from "lucide-react";
+import {
+  AlertCircle,
+  LoaderCircle,
+  PackageSearch
+} from "lucide-react";
 
-function StateBlock({
-  type,
-  message,
-  onRetry,
-}) {
+function StateBlock({ type, message, onRetry }) {
   if (type === "loading") {
     return (
       <div className="flex min-h-60 flex-col items-center justify-center">
@@ -22,7 +22,7 @@ function StateBlock({
 
   if (type === "error") {
     return (
-      <div className="flex min-h-60 flex-col items-center justify-center text-center">
+      <div className="flex min-h-60 flex-col items-center justify-center px-4 text-center">
 
         <AlertCircle
           size={40}
@@ -33,13 +33,13 @@ function StateBlock({
           Something went wrong
         </h2>
 
-        <p className="mt-2 text-slate-600">
+        <p className="mt-2 max-w-md leading-relaxed text-slate-600">
           {message || "We couldn't load the products."}
         </p>
 
         <button
           onClick={onRetry}
-          className="mt-5 rounded-lg bg-teal-700 px-5 py-3 font-medium text-white hover:bg-teal-800"
+          className="mt-5 h-11 rounded-lg bg-teal-700 px-5 font-medium text-white hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Retry
         </button>
@@ -50,7 +50,7 @@ function StateBlock({
 
   if (type === "empty") {
     return (
-      <div className="flex min-h-60 flex-col items-center justify-center text-center">
+      <div className="flex min-h-60 flex-col items-center justify-center px-4 text-center">
 
         <PackageSearch
           size={40}
@@ -61,7 +61,7 @@ function StateBlock({
           No products found
         </h2>
 
-        <p className="mt-2 text-slate-600">
+        <p className="mt-2 max-w-md leading-relaxed text-slate-600">
           Try a different search term or choose another category.
         </p>
 

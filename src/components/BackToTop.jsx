@@ -6,11 +6,7 @@ function BackToTop() {
 
   useEffect(() => {
     function handleScroll() {
-      if (window.scrollY > 400) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
+      setShowButton(window.scrollY > 400);
     }
 
     window.addEventListener("scroll", handleScroll);
@@ -23,7 +19,7 @@ function BackToTop() {
   function scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: "smooth"
     });
   }
 

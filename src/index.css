@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-
 @import "tailwindcss";
 
 * {
@@ -10,5 +8,12 @@
 
 body {
   font-family: "Inter", sans-serif;
+  color: #1e293b;
   background: #f8fafc;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
 }

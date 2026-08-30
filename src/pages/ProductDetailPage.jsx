@@ -10,6 +10,12 @@ import api from "../api/axiosInstance";
 import useCartStore from "../store/useCartStore";
 import StateBlock from "../components/StateBlock";
 
+import {
+  formatPrice,
+  getDiscountedPrice,
+  toTitleCase,
+} from "../utils/format";
+
 function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,14 +38,12 @@ function ProductDetailPage() {
 
       setSelectedImage(
         response.data.images?.[0] ||
-        response.data.thumbnail
+          response.data.thumbnail
       );
     } catch (error) {
       console.error(error);
 
-      setError(
-        "We couldn't find this product."
-      );
+      setError("We couldn't find this product.");
     } finally {
       setLoading(false);
     }
@@ -49,11 +53,9 @@ function ProductDetailPage() {
     fetchProduct();
   }, [id]);
 
-
   if (loading) {
     return <StateBlock type="loading" />;
   }
-
 
   if (error) {
     return (
@@ -65,29 +67,22 @@ function ProductDetailPage() {
     );
   }
 
-
   if (!product) {
     return null;
   }
 
-
   return (
     <div>
-
       <button
         onClick={() => navigate(-1)}
-        className="mb-6 flex items-center gap-2 font-medium text-slate-600 transition-colors hover:text-teal-700"
+        className="mb-6 flex items-center gap-2 font-medium text-slate-600 transition-colors hover:text-teal-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2"
       >
         <ArrowLeft size={20} />
-
         Back
       </button>
 
-
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-
         <div>
-
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <img
               src={selectedImage}
@@ -96,14 +91,12 @@ function ProductDetailPage() {
             />
           </div>
 
-
           <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
-
             {product.images?.map((image, index) => (
               <button
                 key={`${product.id}-${index}`}
                 onClick={() => setSelectedImage(image)}
-                className={`flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors ${
+                className={`flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 ${
                   selectedImage === image
                     ? "border-teal-700"
                     : "border-slate-200 hover:border-slate-300"
@@ -116,16 +109,12 @@ function ProductDetailPage() {
                 />
               </button>
             ))}
-
           </div>
-
         </div>
 
-
         <div>
-
           <p className="text-sm font-semibold uppercase tracking-wider text-teal-700">
-            {product.category}
+            {toTitleCase(product.category)}
           </p>
 
           <h1 className="mt-2 font-display text-3xl font-bold tracking-tight">
@@ -136,9 +125,7 @@ function ProductDetailPage() {
             {product.brand || "No brand"}
           </p>
 
-
           <div className="mt-6 flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 w-fit">
-
             <Star
               size={20}
               fill="currentColor"
@@ -148,38 +135,37 @@ function ProductDetailPage() {
             <span className="font-medium">
               {product.rating}
             </span>
-
           </div>
 
+          <div className="mt-6 flex items-center gap-3">
+            <p className="text-3xl font-bold text-slate-900">
+              {formatPrice(getDiscountedPrice(product))}
+            </p>
 
-          <p className="mt-6 text-3xl font-bold text-slate-900">
-            ₹{product.price.toFixed(2)}
-          </p>
-
+            {product.discountPercentage > 0 && (
+              <p className="text-lg line-through text-slate-400">
+                {formatPrice(product.price)}
+              </p>
+            )}
+          </div>
 
           <p className="mt-4 text-slate-600">
             Stock: {product.stock}
           </p>
 
-
           <p className="mt-6 leading-relaxed text-slate-600">
             {product.description}
           </p>
 
-
           <button
             onClick={() => addItem(product)}
-            className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-4 font-medium text-white shadow-sm transition-colors hover:bg-teal-800 sm:w-auto"
+            className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-5 py-4 font-medium text-white shadow-sm transition-colors hover:bg-teal-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2 sm:w-auto"
           >
             <ShoppingCart size={20} />
-
             Add to cart
           </button>
-
         </div>
-
       </div>
-
     </div>
   );
 }

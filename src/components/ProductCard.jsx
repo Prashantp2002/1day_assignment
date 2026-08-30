@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, Star } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+
+import {
+  formatPrice,
+  getDiscountedPrice,
+  getStars,
+} from "../utils/format";
 
 import useCartStore from "../store/useCartStore";
 
@@ -33,7 +39,6 @@ function ProductCard({ product }) {
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-
         <div>
           <h2 className="truncate font-display text-base font-bold leading-tight tracking-tight text-slate-900">
             {product.title}
@@ -42,47 +47,58 @@ function ProductCard({ product }) {
           <p className="mt-1 truncate text-sm text-slate-500">
             {product.brand || "No brand"}
           </p>
+
+          <p className="mt-2 line-clamp-2 text-sm leading-5 text-slate-500">
+            {product.description}
+          </p>
         </div>
 
         <div className="mt-5 flex items-center justify-between">
-
           <div>
             <p className="text-xs uppercase tracking-wide text-slate-400">
               Price
             </p>
 
-            <p className="mt-1 text-lg font-bold text-slate-900">
-              ₹{product.price.toFixed(2)}
-            </p>
+            <div className="mt-1 flex items-center gap-2">
+              <p className="text-lg font-bold text-slate-900">
+                {formatPrice(getDiscountedPrice(product))}
+              </p>
+
+              {product.discountPercentage > 0 && (
+                <p className="text-sm line-through text-slate-400">
+                  {formatPrice(product.price)}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-1 rounded-lg bg-slate-100 px-2.5 py-1.5">
-            <Star
-              size={16}
-              strokeWidth={1.75}
-              fill="currentColor"
-              className="text-teal-700"
-            />
+            <div className="flex">
+              {getStars(product.rating).map((filled, index) => (
+                <span
+                  key={index}
+                  className={
+                    filled ? "text-yellow-400" : "text-slate-300"
+                  }
+                >
+                  ★
+                </span>
+              ))}
+            </div>
 
-            <span className="text-sm font-medium text-slate-700">
+            <span className="ml-1 text-sm font-medium text-slate-700">
               {product.rating}
             </span>
           </div>
-
         </div>
 
         <button
           onClick={handleAddToCart}
           className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-4 text-sm font-semibold text-white transition hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
-          <ShoppingCart
-            size={18}
-            strokeWidth={1.75}
-          />
-
+          <ShoppingCart size={18} strokeWidth={1.75} />
           Add to cart
         </button>
-
       </div>
     </Link>
   );

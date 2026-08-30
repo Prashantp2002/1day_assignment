@@ -31,15 +31,15 @@ function ProductsPage() {
       } else if (search) {
         response = await api.get("/products/search", {
           params: {
-            q: search
-          }
+            q: search,
+          },
         });
       } else {
         response = await api.get("/products", {
           params: {
             limit: 12,
-            skip: 0
-          }
+            skip: 0,
+          },
         });
       }
 
@@ -109,7 +109,6 @@ function ProductsPage() {
 
   return (
     <div className="mx-auto w-full max-w-8xl">
-
       <div className="mb-6 sm:mb-8">
         <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-teal-700">
           Our collection
@@ -134,9 +133,15 @@ function ProductsPage() {
         onSortChange={handleSortChange}
       />
 
-      {loading && (
-        <StateBlock type="loading" />
+      {!loading && !error && (
+        <p className="mb-4 text-sm text-slate-500">
+          {search
+            ? `${sortedProducts.length} products for '${search}'`
+            : `${sortedProducts.length} products found`}
+        </p>
       )}
+
+      {loading && <StateBlock type="loading" />}
 
       {!loading && error && (
         <StateBlock
@@ -162,7 +167,6 @@ function ProductsPage() {
       )}
 
       <BackToTop />
-
     </div>
   );
 }

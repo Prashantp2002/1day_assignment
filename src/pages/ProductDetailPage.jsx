@@ -6,7 +6,6 @@ import {
   Star,
 } from "lucide-react";
 
-import api from "../api/axiosInstance";
 import useCartStore from "../store/useCartStore";
 import StateBlock from "../components/StateBlock";
 
@@ -16,42 +15,30 @@ import {
   toTitleCase,
 } from "../utils/format";
 
+import { useFetch } from "../hooks/useFetch";
+
 function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const addItem = useCartStore((state) => state.addItem);
 
-  const [product, setProduct] = useState(null);
+  const {
+    data: product,
+    loading,
+    error,
+    refetch,
+  } = useFetch(`/products/${id}`);
+
   const [selectedImage, setSelectedImage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  async function fetchProduct() {
-    try {
-      setLoading(true);
-      setError("");
-
-      const response = await api.get(`/products/${id}`);
-
-      setProduct(response.data);
-
-      setSelectedImage(
-        response.data.images?.[0] ||
-          response.data.thumbnail
-      );
-    } catch (error) {
-      console.error(error);
-
-      setError("We couldn't find this product.");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   useEffect(() => {
-    fetchProduct();
-  }, [id]);
+    if (product) {
+      setSelectedImage(
+        product.images?.[0] || product.thumbnail
+      );
+    }
+  }, [product]);
 
   if (loading) {
     return <StateBlock type="loading" />;
@@ -61,8 +48,8 @@ function ProductDetailPage() {
     return (
       <StateBlock
         type="error"
-        message={error}
-        onRetry={fetchProduct}
+        message="We couldn't find this product."
+        onRetry={refetch}
       />
     );
   }
@@ -84,11 +71,13 @@ function ProductDetailPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <img
-              src={selectedImage}
-              alt={product.title}
-              className="h-[400px] w-full object-cover transition-opacity duration-300 sm:h-[500px]"
-            />
+            {selectedImage && (
+  <img
+    src={selectedImage}
+    alt={product.title}
+    className="h-[400px] w-full object-cover transition-opacity duration-300 sm:h-[500px]"
+  />
+)}
           </div>
 
           <div className="mt-4 flex gap-3 overflow-x-auto pb-1">
@@ -125,7 +114,7 @@ function ProductDetailPage() {
             {product.brand || "No brand"}
           </p>
 
-          <div className="mt-6 flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 w-fit">
+          <div className="mt-6 flex w-fit items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5">
             <Star
               size={20}
               fill="currentColor"

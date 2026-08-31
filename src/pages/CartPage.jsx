@@ -5,6 +5,7 @@ import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import useCartStore from "../store/useCartStore";
 import Modal from "../components/Modal";
 import { formatPrice, timeAgo } from "../utils/format";
+import { useToggle } from "../hooks/useToggle";
 
 function CartPage() {
   const items = useCartStore((state) => state.items);
@@ -12,16 +13,21 @@ function CartPage() {
   const decrement = useCartStore((state) => state.decrement);
   const removeItem = useCartStore((state) => state.removeItem);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToRemove, setItemToRemove] = useState(null);
+
+  const {
+    value: isModalOpen,
+    setTrue: openModal,
+    setFalse: closeModal,
+  } = useToggle();
 
   function openRemoveModal(item) {
     setItemToRemove(item);
-    setIsModalOpen(true);
+    openModal();
   }
 
   function closeRemoveModal() {
-    setIsModalOpen(false);
+    closeModal();
     setItemToRemove(null);
   }
 

@@ -7,6 +7,8 @@ import FilterBar from "../components/FilterBar";
 import StateBlock from "../components/StateBlock";
 import BackToTop from "../components/BackToTop";
 
+import { useDebounce } from "../hooks/useDebounce";
+
 function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -14,10 +16,36 @@ function ProductsPage() {
   const category = searchParams.get("category") || "";
   const sort = searchParams.get("sort") || "";
 
+  const [searchInput, setSearchInput] = useState(search);
+
+  const debouncedSearch = useDebounce(searchInput, 400);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setSearchInput(search);
+  }, [search]);
+
+  useEffect(() => {
+    const newParams = new URLSearchParams(searchParams);
+
+    if (debouncedSearch.trim()) {
+      newParams.set("q", debouncedSearch.trim());
+    } else {
+      newParams.delete("q");
+    }
+
+    if (newParams.toString() !== searchParams.toString()) {
+      setSearchParams(newParams);
+    }
+  }, [
+    debouncedSearch,
+    searchParams,
+    setSearchParams,
+  ]);
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -27,7 +55,9 @@ function ProductsPage() {
       let response;
 
       if (category) {
-        response = await api.get(`/products/category/${category}`);
+        response = await api.get(
+          `/products/category/${category}`
+        );
       } else if (search) {
         response = await api.get("/products/search", {
           params: {
@@ -46,7 +76,9 @@ function ProductsPage() {
       setProducts(response.data.products || []);
     } catch (error) {
       console.error(error);
-      setError("We couldn't load the products. Please try again.");
+      setError(
+        "We couldn't load the products. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -82,7 +114,7 @@ function ProductsPage() {
   }
 
   function handleSearchChange(value) {
-    updateFilter("q", value);
+    setSearchInput(value);
   }
 
   function handleCategoryChange(value) {
@@ -124,7 +156,7 @@ function ProductsPage() {
       </div>
 
       <FilterBar
-        search={search}
+        search={searchInput}
         category={category}
         sort={sort}
         categories={categories}
@@ -155,16 +187,18 @@ function ProductsPage() {
         <StateBlock type="empty" />
       )}
 
-      {!loading && !error && sortedProducts.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {sortedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-          ))}
-        </div>
-      )}
+      {!loading &&
+        !error &&
+        sortedProducts.length > 0 && (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {sortedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+        )}
 
       <BackToTop />
     </div>

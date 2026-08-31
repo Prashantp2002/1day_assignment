@@ -70,6 +70,10 @@ const useCartStore = create((set) => ({
     }));
   },
 
+  setItems: (items) => {
+    set({ items });
+  },
+
   clearCart: () => {
     set({
       items: [],
